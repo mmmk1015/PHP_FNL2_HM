@@ -1,20 +1,19 @@
 <?php
 session_start();
-include('functions.php');
+include("functions.php");
 check_session_id();
 
 if (
-  !isset($_POST['title_name']) || $_POST['title_name'] === '' ||
+  !isset($_POST['title']) || $_POST['title'] === '' ||
   !isset($_POST['category']) || $_POST['category'] === '' ||
   !isset($_POST['difficulty']) || $_POST['difficulty'] === '' ||
   !isset($_POST['voltage']) || $_POST['voltage'] === ''  ||
   !isset($_POST['howto']) || $_POST['howto'] === '' 
 ) {
-  echo json_encode(["error_msg" => "no input"]);
-  exit();
+  exit('paramError');
 }
 
-$title_name = $_POST['title_name'];
+$title = $_POST['title'];
 $category = (int)$_POST['category'];
 $difficulty = (int)$_POST['difficulty'];
 $voltage = (int)$_POST['voltage'];
@@ -23,10 +22,10 @@ $howto = $_POST['howto'];
 
 $pdo = connect_to_db();
 
-$sql = 'INSERT INTO diary_table(title_name, category, difficulty, voltage, howto) VALUES(?, ?, ?, ?, ?)';
+$sql = 'INSERT INTO diary_table(id, title, category, difficulty, voltage, howto, created_at, updated_at, deleted_at) VALUES(NULL, :title, :category, :difficulty, :voltage, :howto, now(), now(), NULL)';
 
 $stmt = $pdo->prepare($sql);
-$stmt->bindValue(':title_name', $title_name, PDO::PARAM_STR);
+$stmt->bindValue(':title', $title, PDO::PARAM_STR);
 $stmt->bindValue(':category', $category, PDO::PARAM_STR);
 $stmt->bindValue(':difficulty', $difficulty, PDO::PARAM_STR);
 $stmt->bindValue(':voltage', $voltage, PDO::PARAM_STR);

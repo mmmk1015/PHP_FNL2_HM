@@ -32,10 +32,12 @@ check_session_id();
         <br>
       </div>
       <div>
-      今日の気分：
-        <input type="radio" name="difficulty" value="1">😊
-        <input type="radio" name="difficulty" value="2" checked>🙂
-        <input type="radio" name="difficulty" value="3">😣
+      今日の気分： <select name="difficulty">
+        <option hidden>えらんでね</option>
+        <option value="1">😊 元気</option>
+        <option value="2">🙂 そこそこ</option>
+        <option value="3">😣 微妙</option>
+        </select>
         <br>
         </div>
         <div>
